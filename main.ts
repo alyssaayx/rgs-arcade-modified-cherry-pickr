@@ -28,10 +28,29 @@ let mySprite = sprites.create(img`
     . . e e e . e e . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
+let mySprite2 = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Player)
 controller.moveSprite(mySprite, 150, 150)
 scene.cameraFollowSprite(mySprite)
 info.setScore(0)
 info.startCountdown(60)
+// Plays the theme melody of the game throughout the game nonstop
 forever(function () {
     music.playMelody("D E D F E F D E ", 120)
 })
