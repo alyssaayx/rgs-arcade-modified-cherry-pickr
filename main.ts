@@ -1,3 +1,11 @@
+namespace SpriteKind {
+    export const PointDeductor = SpriteKind.create()
+}
+sprites.onOverlap(SpriteKind.PointDeductor, SpriteKind.Player, function (sprite, otherSprite) {
+    info.changeScoreBy(-1)
+    egg.destroy(effects.fire, 500)
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(8, 8))
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     info.changeScoreBy(1)
     otherSprite.destroy()
@@ -8,9 +16,18 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 let dinosaur: Sprite = null
 let ghost: Sprite = null
+let egg: Sprite = null
+let mySprite: Sprite = null
+// On start, the splash "Modified Cherry Pickr" will appear
 game.splash("Modified Cherry Pickr")
+// Briefly explains the game
+game.showLongText("Bananas are your enemy, along with the dinosaurs! Only blocks are your friends!", DialogLayout.Full)
+// Engages the user, asking them if they are ready to play the game
+game.splash(game.ask("Are you ready for this?"), "Great! Let's get started")
+// Tilemap is set to a specially customised map
 tiles.setTilemap(tilemap`level1`)
-let mySprite = sprites.create(img`
+// The player sprite is set to a "Pac-Man" inspired character. 
+mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . 5 5 5 . . . . . . . . . 
     . . . 5 5 5 5 5 . . . . . . . . 
@@ -28,26 +45,32 @@ let mySprite = sprites.create(img`
     . . e e e . e e . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-let mySprite2 = sprites.create(img`
+// Enemy is personally drawn, inspired by "Among Us" series
+let myEnemy = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Player)
+    . . . . . . a a a a . . . . . . 
+    . . . . a a a a a a a a . . . . 
+    . . . a 9 9 9 9 9 9 9 9 a . . . 
+    . . . a 9 3 9 9 9 9 3 9 a . . . 
+    . . . a 9 9 9 9 9 9 9 9 a . . . 
+    . . . a 9 9 9 9 9 9 9 f a 8 . . 
+    . . . a 9 9 9 9 f f f f a 8 . . 
+    . . . a a a a a a a a a a 8 . . 
+    . . . a a a a a a a a a a 8 . . 
+    . . . a a a a a a a a a a 8 . . 
+    . . . a a a a a a a a a a 8 . . 
+    . . . a a a a a a a a a a . . . 
+    . . . a a a a . . a a a a . . . 
+    . . . a a a a . . a a a a . . . 
+    `, SpriteKind.Enemy)
+// Allows the player to move the Player sprite with buttons 
 controller.moveSprite(mySprite, 150, 150)
+// Camera follows sprite to ensure it is in the frame throughout the course of the game
 scene.cameraFollowSprite(mySprite)
+// Setting the enemy in a fixed position at the start of the game so as to prevent the player sprite from getting killed at the start of the game
+myEnemy.setPosition(0, 0)
+myEnemy.follow(mySprite, 20)
 info.setScore(0)
 info.startCountdown(60)
 // Plays the theme melody of the game throughout the game nonstop
@@ -78,8 +101,6 @@ game.onUpdateInterval(500, function () {
         ....................
         `, SpriteKind.Food)
     ghost.setPosition(randint(0, 256), randint(0, 256))
-})
-game.onUpdateInterval(20000, function () {
     dinosaur = sprites.create(img`
         . . . . . . . . . . . 8 8 8 8 8 
         . . . . . . . . . 8 8 7 7 7 2 8 
@@ -99,4 +120,23 @@ game.onUpdateInterval(20000, function () {
         . 8 8 8 8 8 8 8 8 8 8 8 8 . . . 
         `, SpriteKind.Enemy)
     dinosaur.setPosition(randint(0, 256), randint(0, 256))
+    egg = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . e . . 
+        . . . . . . . . . . . . e e e . 
+        . . . . . . . . . 5 5 e e e . . 
+        . . . . . . . 5 5 5 5 5 e . . . 
+        . . . . . . 5 5 5 5 5 5 5 . . . 
+        . . . . . 5 5 5 5 f f 5 5 . . . 
+        . . . 5 5 5 5 5 f f 5 5 5 . . . 
+        . . 5 5 5 5 5 f f 5 5 5 5 . . . 
+        . 5 5 5 f f f f 5 5 5 5 . . . . 
+        . 5 5 f f 5 5 5 5 5 5 . . . . . 
+        . 5 5 5 5 5 5 5 5 5 . . . . . . 
+        . . . 5 5 5 5 5 . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.PointDeductor)
+    egg.setPosition(randint(0, 256), randint(0, 256))
 })
