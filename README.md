@@ -1,4 +1,12 @@
- 
+Hello! Welcome to this project 🦖
+
+It's made for my Computational Thinking Course, which I attended in Year 1 of RGS. Drop me a PM if anything's up!
+
+- My game is based on the original version of Cherry Pickr. Instead of the original Cherry Pickr game, I added a new enemy, and food.
+The enemy sprite will follow the player sprite throughout the game. Once the enemy sprite overlaps the player sprite, the game ends and the player loses.
+- There is also an “Enemy” which disguises itself as food. Once touched, the game will end.
+- There is also a “Point Adder” sprite which once the sprite overlaps, instead of adding one point as usual, the sprite earns two.
+- There is also a “Point Deductor” sprite which once the sprite overlaps, the player sprite will lose a point and reset to the middle of the map. 
 
 
 > Open this page at [https://alyssaayx.github.io/rgs-arcade-modified-cherry-pickr/](https://alyssaayx.github.io/rgs-arcade-modified-cherry-pickr/)
