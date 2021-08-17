@@ -1,9 +1,15 @@
 namespace SpriteKind {
     export const PointDeductor = SpriteKind.create()
+    export const PointAdder = SpriteKind.create()
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.PointAdder, function (sprite, otherSprite) {
+    info.changeScoreBy(2)
+    otherSprite.destroy()
+    effects.bubbles.startScreenEffect(500)
+})
 sprites.onOverlap(SpriteKind.PointDeductor, SpriteKind.Player, function (sprite, otherSprite) {
     info.changeScoreBy(-1)
-    egg.destroy(effects.fire, 500)
+    myPointAdder.destroy(effects.fire, 500)
     tiles.placeOnTile(mySprite, tiles.getTileLocation(8, 8))
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
@@ -14,19 +20,20 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     otherSprite.destroy()
     game.over(false)
 })
+let myPointDeductor: Sprite = null
 let dinosaur: Sprite = null
 let ghost: Sprite = null
-let egg: Sprite = null
+let myPointAdder: Sprite = null
 let mySprite: Sprite = null
 // On start, the splash "Modified Cherry Pickr" will appear
 game.splash("Modified Cherry Pickr")
 // Briefly explains the game
 game.showLongText("Bananas are your enemy, along with the dinosaurs! Only blocks are your friends!", DialogLayout.Full)
 // Engages the user, asking them if they are ready to play the game
-game.splash(game.ask("Are you ready for this?"), "Great! Let's get started")
+game.splash("Are you ready for this?", "Great! Let's get started")
 // Tilemap is set to a specially customised map
 tiles.setTilemap(tilemap`level1`)
-// The player sprite is set to a "Pac-Man" inspired character. 
+// The player sprite is set to a "Pac-Man" inspired character.
 mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . 5 5 5 . . . . . . . . . 
@@ -64,15 +71,36 @@ let myEnemy = sprites.create(img`
     . . . a a a a . . a a a a . . . 
     . . . a a a a . . a a a a . . . 
     `, SpriteKind.Enemy)
-// Allows the player to move the Player sprite with buttons 
+// Allows the player to move the Player sprite with buttons
 controller.moveSprite(mySprite, 150, 150)
 // Camera follows sprite to ensure it is in the frame throughout the course of the game
 scene.cameraFollowSprite(mySprite)
+myEnemy.follow(mySprite, 20)
 // Setting the enemy in a fixed position at the start of the game so as to prevent the player sprite from getting killed at the start of the game
 myEnemy.setPosition(0, 0)
-myEnemy.follow(mySprite, 20)
 info.setScore(0)
 info.startCountdown(60)
+game.onUpdateInterval(1000, function () {
+    myPointAdder = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . 7 7 7 7 7 7 . . . . . 
+        . . . . . 7 7 7 7 7 7 . . . . . 
+        . . . . . 7 7 7 7 7 7 . . . . . 
+        . . . . . 7 7 7 7 7 7 . . . . . 
+        . . . . . 7 7 7 7 7 7 . . . . . 
+        . . . . . 7 7 7 7 7 7 . . . . . 
+        . . . . . 7 7 7 7 7 7 . . . . . 
+        . . . . . 7 7 7 7 7 7 . . . . . 
+        . . . . . . . e e . . . . . . . 
+        . . . . . . . e e . . . . . . . 
+        . . . . . . . e e . . . . . . . 
+        `, SpriteKind.PointAdder)
+    myPointAdder.setPosition(randint(0, 256), randint(0, 256))
+})
 // Plays the theme melody of the game throughout the game nonstop
 forever(function () {
     music.playMelody("D E D F E F D E ", 120)
@@ -120,7 +148,7 @@ game.onUpdateInterval(500, function () {
         . 8 8 8 8 8 8 8 8 8 8 8 8 . . . 
         `, SpriteKind.Enemy)
     dinosaur.setPosition(randint(0, 256), randint(0, 256))
-    egg = sprites.create(img`
+    myPointDeductor = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . e . . 
         . . . . . . . . . . . . e e e . 
@@ -138,5 +166,5 @@ game.onUpdateInterval(500, function () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.PointDeductor)
-    egg.setPosition(randint(0, 256), randint(0, 256))
+    myPointDeductor.setPosition(randint(0, 256), randint(0, 256))
 })
