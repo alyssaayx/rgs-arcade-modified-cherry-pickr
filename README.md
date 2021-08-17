@@ -8,6 +8,8 @@ The enemy sprite will follow the player sprite throughout the game. Once the ene
 - There is also a “Point Adder” sprite which once the sprite overlaps, instead of adding one point as usual, the sprite earns two.
 - There is also a “Point Deductor” sprite which once the sprite overlaps, the player sprite will lose a point and reset to the middle of the map. 
 
+Have fun playing! 😁
+
 
 > Open this page at [https://alyssaayx.github.io/rgs-arcade-modified-cherry-pickr/](https://alyssaayx.github.io/rgs-arcade-modified-cherry-pickr/)
 
