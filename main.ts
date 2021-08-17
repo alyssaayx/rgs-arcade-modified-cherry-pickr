@@ -28,7 +28,7 @@ let mySprite: Sprite = null
 // On start, the splash "Modified Cherry Pickr" will appear
 game.splash("Modified Cherry Pickr")
 // Briefly explains the game
-game.showLongText("Bananas are your enemy, along with the dinosaurs! Only blocks are your friends!", DialogLayout.Full)
+game.showLongText("Bananas are your enemy, along with the dinosaurs! Only blocks and trees are your friends!", DialogLayout.Full)
 // Engages the user, asking them if they are ready to play the game
 game.splash("Are you ready for this?", "Great! Let's get started")
 // Tilemap is set to a specially customised map
