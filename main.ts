@@ -18,7 +18,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
-    game.over(false)
+    game.over(false, effects.melt)
 })
 let myPointDeductor: Sprite = null
 let dinosaur: Sprite = null
