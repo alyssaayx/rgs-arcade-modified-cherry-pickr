@@ -20,9 +20,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     otherSprite.destroy()
     game.over(false, effects.melt)
 })
-let myPointDeductor: Sprite = null
 let dinosaur: Sprite = null
 let ghost: Sprite = null
+let myPointDeductor: Sprite = null
 let myPointAdder: Sprite = null
 let mySprite: Sprite = null
 // On start, the splash "Modified Cherry Pickr" will appear
@@ -80,7 +80,7 @@ myEnemy.follow(mySprite, 20)
 myEnemy.setPosition(0, 0)
 info.setScore(0)
 info.startCountdown(60)
-game.onUpdateInterval(1000, function () {
+game.onUpdateInterval(15000, function () {
     myPointAdder = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -104,6 +104,27 @@ game.onUpdateInterval(1000, function () {
 // Plays the theme melody of the game throughout the game nonstop
 forever(function () {
     music.playMelody("D E D F E F D E ", 120)
+})
+game.onUpdateInterval(6000, function () {
+    myPointDeductor = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . e . . 
+        . . . . . . . . . . . . e e e . 
+        . . . . . . . . . 5 5 e e e . . 
+        . . . . . . . 5 5 5 5 5 e . . . 
+        . . . . . . 5 5 5 5 5 5 5 . . . 
+        . . . . . 5 5 5 5 f f 5 5 . . . 
+        . . . 5 5 5 5 5 f f 5 5 5 . . . 
+        . . 5 5 5 5 5 f f 5 5 5 5 . . . 
+        . 5 5 5 f f f f 5 5 5 5 . . . . 
+        . 5 5 f f 5 5 5 5 5 5 . . . . . 
+        . 5 5 5 5 5 5 5 5 5 . . . . . . 
+        . . . 5 5 5 5 5 . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.PointDeductor)
+    myPointDeductor.setPosition(randint(0, 256), randint(0, 256))
 })
 game.onUpdateInterval(500, function () {
     ghost = sprites.create(img`
@@ -129,6 +150,8 @@ game.onUpdateInterval(500, function () {
         ....................
         `, SpriteKind.Food)
     ghost.setPosition(randint(0, 256), randint(0, 256))
+})
+game.onUpdateInterval(20000, function () {
     dinosaur = sprites.create(img`
         . . . . . . . . . . . 8 8 8 8 8 
         . . . . . . . . . 8 8 7 7 7 2 8 
@@ -148,23 +171,4 @@ game.onUpdateInterval(500, function () {
         . 8 8 8 8 8 8 8 8 8 8 8 8 . . . 
         `, SpriteKind.Enemy)
     dinosaur.setPosition(randint(0, 256), randint(0, 256))
-    myPointDeductor = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . e . . 
-        . . . . . . . . . . . . e e e . 
-        . . . . . . . . . 5 5 e e e . . 
-        . . . . . . . 5 5 5 5 5 e . . . 
-        . . . . . . 5 5 5 5 5 5 5 . . . 
-        . . . . . 5 5 5 5 f f 5 5 . . . 
-        . . . 5 5 5 5 5 f f 5 5 5 . . . 
-        . . 5 5 5 5 5 f f 5 5 5 5 . . . 
-        . 5 5 5 f f f f 5 5 5 5 . . . . 
-        . 5 5 f f 5 5 5 5 5 5 . . . . . 
-        . 5 5 5 5 5 5 5 5 5 . . . . . . 
-        . . . 5 5 5 5 5 . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.PointDeductor)
-    myPointDeductor.setPosition(randint(0, 256), randint(0, 256))
 })
