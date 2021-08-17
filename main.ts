@@ -80,7 +80,7 @@ myEnemy.follow(mySprite, 20)
 myEnemy.setPosition(0, 0)
 info.setScore(0)
 info.startCountdown(60)
-game.onUpdateInterval(15000, function () {
+game.onUpdateInterval(4000, function () {
     myPointAdder = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
